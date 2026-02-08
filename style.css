@@ -204,13 +204,13 @@ body {
 }
 
 .reg-wrapper {
-    padding: 15rem 0 4rem;
+    padding: 15rem 0rem 0rem 4rem;
 }
 
 /* scroll container */
 .reg-scroll {
     overflow-x: auto;
-    padding: 15rem 0 2rem;
+    padding: 15rem 0rem 0rem 2rem;
     -webkit-overflow-scrolling: touch;
 
     scrollbar-width: none;
@@ -230,7 +230,7 @@ body {
     gap: 0.25rem;
     width: max-content;
     scroll-snap-type: x mandatory;
-    padding: 15rem 0 2rem;
+    padding: 15rem 0rem 0rem 2rem;
 }
 
 /* image item */
