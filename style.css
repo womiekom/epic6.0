@@ -677,66 +677,6 @@ body {
     }
 }
 
-/* ===================================
-   SECTION: REGISTRATION
-   Background + Content Grid
-   =================================== */
-.registration {
-    width: 100%;
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-color: #651639
-}
-
-.reg-wrapper {
-    padding: 15rem 0rem 0rem 4rem;
-}
-
-/* scroll container */
-.reg-scroll {
-    overflow-x: auto;
-    padding: 15rem 0rem 0rem 2rem;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* IE & Edge lama */
-}
-
-.reg-scroll::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari */
-}
-
-/* horizontal track */
-.reg-track {
-    display: flex;
-    gap: 0.25rem;
-    width: max-content;
-    scroll-snap-type: x mandatory;
-    padding: 15rem 0rem 0rem 2rem;
-}
-
-/* image item */
-.reg-item {
-    scroll-snap-align: center;
-    flex-shrink: 0;
-}
-
-.reg-item img {
-    height: 260px;
-    width: auto;
-    border-radius: 20px;
-    transition: transform 0.3s ease;
-}
-
-/* hover desktop */
-.reg-item:hover img {
-    transform: scale(1.05);
-}
-
 .reg-item {
     text-align: center;
     color: #fff;
