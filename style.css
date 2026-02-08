@@ -210,7 +210,7 @@ body {
 /* scroll container */
 .reg-scroll {
     overflow-x: auto;
-    padding: 0 2rem;
+    padding: 15rem 0 2rem;
     -webkit-overflow-scrolling: touch;
 
     scrollbar-width: none;
@@ -230,7 +230,7 @@ body {
     gap: 0.25rem;
     width: max-content;
     scroll-snap-type: x mandatory;
-    padding: 0 2rem;
+    padding: 15rem 0 2rem;
 }
 
 /* image item */
