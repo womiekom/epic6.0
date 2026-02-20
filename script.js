@@ -119,6 +119,11 @@ cards.forEach(card => {
     cardObserver.observe(card);
 });
 
+function toggleEscolate() {
+    const menu = document.getElementById("escolateOptions");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
 // ===================================
 // ACTIVE NAVIGATION LINK HIGHLIGHT
 // Highlight current section in navigation
@@ -156,10 +161,3 @@ regScroll.addEventListener('wheel', (e) => {
     e.preventDefault();
     regScroll.scrollLeft += e.deltaY;
 }, { passive: false });
-
-// ===================================
-// CONSOLE WELCOME MESSAGE
-// Display welcome message in browser console
-// ===================================
-console.log('%c🎉 Welcome to EPIC 6.0! 🎉', 'font-size: 24px; font-weight: bold; color: #4A148C;');
-console.log('%cEvent Website Built with ❤️', 'font-size: 14px; color: #1565C0;');

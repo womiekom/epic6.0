@@ -62,7 +62,7 @@ body {
 }
 
 .logo img {
-    height: 45px;
+    height: 70px;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
 }
 
@@ -74,7 +74,7 @@ body {
 .nav-link {
     color: var(--white);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
@@ -152,10 +152,9 @@ body {
 /* Mobile background (<768px) */
 @media (max-width: 767px) {
     .hero {
-        background-size: contain;
         background-position: center top;
         background-repeat: no-repeat;
-        height: 95vh;
+        height: 110vh;
         background-image: url('Background/Homepage/Hp.png');
     }
 }
@@ -183,10 +182,9 @@ body {
 /* Mobile background (<768px) */
 @media (max-width: 767px) {
     .mascot {
-        background-size: contain;
         background-position: center top;
         background-repeat: no-repeat;
-        height: 95vh;
+        height: 100vh;
         background-image: url('Background/Pagemascot/Page\ Mascot\ \(Mobile\).JPG');
     }
 }
@@ -204,7 +202,7 @@ body {
 }
 
 .reg-wrapper {
-    padding: 6rem 0 4rem;
+    padding: 15rem 0 4rem;
 }
 
 /* scroll container */
@@ -255,6 +253,7 @@ body {
     text-align: center;
     color: #fff;
     text-decoration: none;
+    position: relative;
 }
 
 .reg-label {
@@ -274,6 +273,22 @@ body {
     /* kuning EPIC */
 }
 
+.escolate-options {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.sub-btn {
+    background: var(--yellow);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 /* Desktop background (≥768px) */
 @media (min-width: 768px) {
     .registration {
@@ -289,11 +304,11 @@ body {
     }
 
     .reg-item img {
-        height: 220px;
+        height: 300px;
     }
 
     .reg-label {
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
 }
 
@@ -334,21 +349,31 @@ body {
 }
 
 .social-link {
-    color: var(--white);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    font-size: 40px;
+    background: none;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+}
+
+.fa-instagram {
+    background: radial-gradient(circle at 30% 107%,
+            #fdf497 0%, #fdf497 5%,
+            #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fa-tiktok {
+    color: #000;
+}
+
+.fa-whatsapp {
+    color: #25D366;
 }
 
 .social-link:hover {
-    background: var(--yellow);
-    color: var(--dark-purple);
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.1);
 }
 
 /* ===================================
@@ -374,7 +399,7 @@ body {
 
 .partnership-btn:nth-child(1) {
     background: var(--yellow);
-    color: var(--dark-purple);
+    color: var(--white);
 }
 
 .partnership-btn:nth-child(2) {
