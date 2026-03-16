@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- LOGIN SCREEN -->
+    <div id="login-container" class="login-container">
+        <div class="login-box">
+            <h1>EPIC Admin</h1>
+            <p>Login to manage ticket orders</p>
+            <form id="login-form">
+                <input type="email" id="admin-email" placeholder="Admin Email" required>
+                <input type="password" id="admin-password" placeholder="Password" required>
+                <button type="submit">
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <div id="dashboard-container" class="dashboard-container hidden">
+
+        <header class="admin-header">
+            <h1>EPIC 6.0 Admin Dashboard</h1>
+
+            <button id="logout-btn">
+                Logout
+            </button>
+        </header>
+
+        <main class="admin-main">
+
+            <h2>Incoming Orders</h2>
+
+            <table class="orders-table">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Ticket</th>
+                        <th>Bundle</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Proof</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="orders-body">
+                </tbody>
+
+            </table>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

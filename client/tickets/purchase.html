@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIC 6.0 Tickets</title>
+    <link rel="icon" type="image/webp" href="../assets/Logo-epic.webp">
+    <link rel="stylesheet" href="../css/purchase.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="notification">Upload sent! We will email you the e-ticket soon!</div>
+    <section class="purchase-hero">
+        <!-- PURCHASE FORM -->
+        <div class="purchase-container" id="purchase-container">
+            <h1>Purchase Ticket</h1>
+            <div class="ticket-summary">
+                <p>Ticket Purchased :</p>
+                <h2 id="ticket-type"></h2>
+            </div>
+            <form class="purchase-form" id="purchase-form">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="tel" id="phone" placeholder="Phone Number" required>
+                <button type="submit" class="purchase-btn">
+                    Proceed to Payment
+                </button>
+            </form>
+        </div>
+        <!-- PAYMENT SECTION -->
+        <div class="payment-container hidden" id="payment-container">
+            <h1>Payment Method</h1>
+            <div class="payment-methods">
+                <div class="payment-box">
+                    <h3>QRIS</h3>
+                    <img src="../assets/QRIS-EPIC.webp" alt="QRIS">
+                </div>
+                <div class="payment-box">
+                    <h3>Bank Transfer</h3>
+                    <p>BCA : 2303260846</p>
+                    <p>A/N : Pritsdka Annisa Brillianty</p>
+                </div>
+            </div>
+            <div class="upload-proof">
+                <label>Upload Proof of Transfer</label>
+                <input type="file" id="proof" accept="image/*">
+            </div>
+            <div class="payment-buttons">
+                <button id="submit-proof" class="purchase-btn">
+                    Submit Proof
+                </button>
+                <button id="back-btn" class="back-btn">
+                    Back
+                </button>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/purchase.js"></script>
+</body>

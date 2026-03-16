@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIC 6.0 Tickets</title>
+    <link rel="icon" type="image/webp" href="../assets/Logo-epic.webp">
+    <link rel="stylesheet" href="../css/tickets.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- SECTION: TICKETS HERO -->
+    <section id="tickets-hero" class="tickets-hero">
+        <div class="tickets-container">
+            <div class="ticket-grid">
+                <div class="ticket-card">
+                    <h2>Presale 1</h2>
+                    <p class="date">16 March - 28 March</p>
+                    <button class="ticket-btn">SEE BUNDLES</button>
+                </div>
+                <div class="ticket-card">
+                    <h2>Presale 2</h2>
+                    <p class="date">Coming Soon!</p>
+                </div>
+                <div class="ticket-card">
+                    <h2>Normal</h2>
+                    <p class="date">Coming Soon!</p>
+                </div>
+            </div>
+            <div class="ticket-detail hidden">
+                <h2>Presale 1 Ticket</h2>
+                <div class="ticket-option">
+                    <span>1 Ticket</span>
+                    <span class="price">Rp 55.000</span>
+                    <button onclick="goToPurchase('presale1','solo')" class="ticket-btn">BUY</button>
+                </div>
+                <h3>Bundle</h3>
+                <div class="ticket-option">
+                    <span>Duo Quest (2 Tickets)</span>
+                    <span class="price">Rp 105.000</span>
+                    <button onclick="goToPurchase('presale1','duo')" class="ticket-btn">BUY</button>
+                </div>
+                <div class="ticket-option">
+                    <span>Three Muskepaws (3 Tickets)</span>
+                    <span class="price">Rp 150.000</span>
+                    <button onclick="goToPurchase('presale1','trio')" class="ticket-btn">BUY</button>
+                </div>
+                <button class="back-btn">Back</button>
+            </div>
+        </div>
+    </section>
+    <script src="../js/tickets.js"></script>
+</body>
+
+</html>

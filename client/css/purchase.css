@@ -1,0 +1,252 @@
+/* ===================================
+   SECTION: PURCHASE HERO
+   Background image only
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.purchase-hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-color: #651639;
+    font-family: 'Rye', sans-serif;
+    background-attachment: fixed;
+}
+
+/* Desktop background */
+@media (min-width: 768px) {
+    .purchase-hero {
+        background-image: url('../assets/Background/Page-Pembelian/Pembelian-Dekstop.webp');
+    }
+}
+
+/* Mobile background */
+@media (max-width: 767px) {
+
+    .purchase-hero {
+        min-height: 100vh;
+        background-position: center top;
+        background-image: url('../assets/Background/Page-Pembelian/Pembelian-Mobile.webp');
+    }
+
+}
+
+.purchase-container {
+    max-width: 600px;
+    width: 90%;
+    padding: 40px;
+    border-radius: 20px;
+    background: linear-gradient(to right,
+            rgba(87, 0, 145, .35),
+            rgba(229, 32, 255, .35));
+    backdrop-filter: blur(20px);
+    color: white;
+    text-align: center;
+}
+
+.ticket-summary {
+    margin: 25px 0;
+}
+
+.purchase-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.purchase-form input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* PAYMENT CONTAINER */
+
+.payment-container {
+    max-width: 600px;
+    width: 90%;
+    padding: 40px;
+    border-radius: 20px;
+    background: linear-gradient(to right,
+            rgba(87, 0, 145, .35),
+            rgba(229, 32, 255, .35));
+    backdrop-filter: blur(20px);
+    color: white;
+    text-align: center;
+
+    display: none;
+    opacity: 0;
+    transition: opacity .5s ease;
+}
+
+/* PAYMENT METHODS */
+
+.payment-methods {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.payment-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.payment-box img {
+    width: 200px;
+    margin-top: 10px;
+}
+
+.purchase-container,
+.payment-container {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.payment-container {
+    display: none;
+}
+
+/* UPLOAD */
+
+.upload-proof {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upload-proof input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* BUTTONS */
+
+.payment-buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.back-btn {
+    background: linear-gradient(to right, #ff4d6d, #ff7aa2);
+    position: relative;
+    overflow: hidden;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 20px rgba(255, 200, 0, 0.35);
+    transition: transform .25s;
+    color: white;
+}
+
+.back-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.8),
+            transparent);
+    transform: skewX(-25deg);
+    animation: shine-left 0.6s forwards;
+    animation-play-state: paused;
+}
+
+.back-btn:hover::before {
+    animation: shine-right 0.6s forwards;
+    animation-play-state: running;
+}
+
+.purchase-btn {
+    background: linear-gradient(to right, #fcad1c, #fffc3a);
+    position: relative;
+    overflow: hidden;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 20px rgba(255, 200, 0, 0.35);
+    transition: transform .25s;
+    color: white;
+}
+
+.purchase-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.8),
+            transparent);
+    transform: skewX(-25deg);
+    animation: shine-left 0.6s forwards;
+    animation-play-state: paused;
+}
+
+.purchase-btn:hover::before {
+    animation: shine-right 0.6s forwards;
+    animation-play-state: running;
+}
+
+@keyframes shine-right {
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes shine-left {
+    0% {
+        left: 150%;
+    }
+
+    100% {
+        left: -100%;
+    }
+}
+
+#notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(to right, #ff4d6d, #ff7aa2);
+    color: white;
+    transition: transform 0.3s ease;
+    transform: translateX(200%);
+    z-index: 999;
+    /* Hidden state */
+}
+
+#notification.show {
+    transform: translateX(0);
+    /* Visible state */
+}

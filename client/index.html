@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIC 6.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/webp" href="assets/Logo-epic.webp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="keywords" content="ekapaksicup, EPIC, EPIC 81, ekapaksicup 81, ekapaksicup 6.0, EPIC 6.0 81">
+    <meta name="author" content="EPIC 6.0">
+</head>
+
+<body>
+    <!-- STICKY HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="assets/Logo-epic.webp">
+            </div>
+
+            <!-- Navigation -->
+            <nav class="nav" id="nav">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#mascot" class="nav-link">Mascot</a>
+                <a href="#registration" class="nav-link">Registration</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="tickets/tickets.html" class="cta-button nav-cta">Buy Tickets!</a>
+            </nav>
+            <a href="tickets/tickets.html" class="cta-button desktop-cta">Buy Tickets!</a>
+
+            <!-- Hamburger Menu -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION: HERO (Background image only) -->
+    <section id="hero" class="hero"></section>
+
+    <!-- SECTION: MASCOT (Background image only) -->
+    <section id="mascot" class="mascot"></section>
+
+    <!-- SECTION: REGISTRATION (Background + Content) -->
+    <section id="registration" class="registration">
+        <div class="reg-wrapper">
+
+            <div class="reg-scroll">
+                <div class="reg-track">
+
+                    <!-- ITEM -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqZBnObxalh8PSTMiKwQ63wEhcZa0aMjKU15qvkXFgScqZ6w/viewform?usp=header"
+                        class="reg-item">
+                        <img src="assets/Logo-Lomba/Band.webp" alt="Band">
+                        <p class="reg-label">Band</p>
+                    </a>
+
+                    <a href="https://forms.gle/rGZ3cxdNvZv74PQA8" class="reg-item">
+                        <img src="assets/Logo-Lomba/Basket.webp" alt="Basket">
+                        <p class="reg-label">Basket</p>
+                    </a>
+
+                    <a href="https://forms.gle/7UGeDqKmymumr9Rd7" class="reg-item">
+                        <img src="assets/Logo-Lomba/Elysile.webp" alt="ELYSILE">
+                        <p class="reg-label">ELYSILE</p>
+                    </a>
+
+                    <a href="https://forms.gle/QwozLr2nvW917hYv7" class="reg-item">
+                        <img src="assets/Logo-Lomba/Epmun.webp" alt="EPMUN">
+                        <p class="reg-label">EPMUN</p>
+                    </a>
+
+                    <a href="javascript:void(0)" class="reg-item escolate-item" onclick="toggleEscolate()">
+                        <img src="assets/Logo-Lomba/Escolate.webp" alt="ESCOLATE">
+                        <p class="reg-label">ESCOLATE</p>
+                    </a>
+
+                    <div class="escolate-options" id="escolateOptions">
+                        <a href="https://bit.ly/4c0josn" target="_blank" class="sub-btn">Da'i</a>
+                        <a href="https://bit.ly/3MPjj0p" target="_blank" class="sub-btn">MHQ</a>
+                    </div>
+
+                    <a href="https://forms.gle/PzSDR5aFEv8A4uzs5" class="reg-item">
+                        <img src="assets/Logo-Lomba/Fifa.webp" alt="FIFA">
+                        <p class="reg-label">FIFA</p>
+                    </a>
+
+                    <a href="https://forms.gle/42U7fZk6ebM7xmjr5" class="reg-item">
+                        <img src="assets/Logo-Lomba/Fotografi.webp" alt="Fotografi">
+                        <p class="reg-label">Fotografi</p>
+                    </a>
+
+                    <a href="https://forms.gle/1kiorMH4eB8i4zTL8" class="reg-item">
+                        <img src="assets/Logo-Lomba/Mlbb.webp" alt="MLBB">
+                        <p class="reg-label">MLBB</p>
+                    </a>
+
+                    <a href="https://forms.gle/XGfpCSNMTmKkfwrd7" class="reg-item">
+                        <img src="assets/Logo-Lomba/Ratoh-jaroe.webp" alt="Ratoh Jaroe">
+                        <p class="reg-label">Ratoh Jaroe</p>
+                    </a>
+
+                    <a href="https://forms.gle/VkvQkwb1DWiD7Wfs7" class="reg-item">
+                        <img src="assets/Logo-Lomba/Scoutventure.webp" alt="Scoutventure">
+                        <p class="reg-label">Scoutventure</p>
+                    </a>
+
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQqzi5DpZg99b5qTjFEDcAh4KCcXWr0444H0Ha--wlzVWWzA/viewform?usp=publish-editor"
+                        class="reg-item">
+                        <img src="assets/Logo-Lomba/Solo-vokal.webp" alt="Solo Vokal">
+                        <p class="reg-label">Solo Vokal</p>
+                    </a>
+
+                    <a href="https://forms.gle/1PU2MaKPqoTNhmPy6" class="reg-item">
+                        <img src="assets/Logo-Lomba/Triviatlon-bible.webp" alt="Triviatlon Bible">
+                        <p class="reg-label">Triviatlon Bible</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER: CONTACT PERSON -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <!-- Social Media Icons -->
+            <div class="social-media">
+                <a href="https://www.instagram.com/ekapaksicup81?igsh=MXQ3c2xtcTJ2NzBjaA==" target="_blank"
+                    class="social-link">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="https://www.tiktok.com/@ekapaksicup.81?_r=1&_t=ZS-944mnWd7n3R" target="_blank"
+                    class="social-link">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+
+                <a href="https://wa.me/6281210746446" target="_blank" class="social-link">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <h2 class="footer-title">Contact Person</h2>
+
+            <!-- Partnership Buttons -->
+            <div class="partnership-buttons">
+                <a href="https://wa.me/6285718388703" target="_blank" class="partnership-btn">
+                    Tenant
+                </a>
+
+                <a href="https://wa.me/6281284702077" target="_blank" class="partnership-btn">
+                    Sponsor
+                </a>
+
+                <a href="https://wa.me/6285813707513" target="_blank" class="partnership-btn">
+                    Media Partner
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
