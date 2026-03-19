@@ -1,7 +1,7 @@
 /* ===============================
 GET TICKET TYPE FROM URL
 =============================== */
-
+let isSubmitting = false
 const params = new URLSearchParams(window.location.search)
 const ticket = params.get("ticket")
 const type = params.get("type")
@@ -115,67 +115,82 @@ const submitProofBtn = document.getElementById("submit-proof")
 submitProofBtn.addEventListener("click", submitOrder)
 async function submitOrder() {
 
+    if (isSubmitting) return
+    isSubmitting = true
+
     const fileInput = document.getElementById("proof")
     const file = fileInput.files[0]
     const notification = document.getElementById("notification")
 
+    submitProofBtn.disabled = true
+    submitProofBtn.innerText = "Processing..."
+
     if (!file) {
         alert("Please upload proof of payment")
+        isSubmitting = false
+        submitProofBtn.disabled = false
         return
     }
 
     if (file.size > 2000000) {
         alert("File too large (max 2MB)")
+        isSubmitting = false
+        submitProofBtn.disabled = false
         return
     }
 
-    const fileName = Date.now() + "_" + file.name
+    try {
 
-    const { error: uploadError } = await client.storage
-        .from("payment-proofs")
-        .upload(fileName, file, {
-            contentType: file.type
-        })
+        const fileName = Date.now() + "_" + file.name
 
-    if (uploadError) {
-        console.error(uploadError)
-        alert(uploadError.message)
+        const { error: uploadError } = await client.storage
+            .from("payment-proofs")
+            .upload(fileName, file, {
+                contentType: file.type
+            })
+
+        if (uploadError) throw uploadError
+
+        const { data } = client.storage
+            .from("payment-proofs")
+            .getPublicUrl(fileName)
+
+        const proofUrl = data.publicUrl
+
+        const { error: insertError } = await client
+            .from("orders")
+            .insert([
+                {
+                    name: orderData.name,
+                    email: orderData.email,
+                    phone: orderData.phone,
+                    ticket_type: orderData.ticket,
+                    bundle_type: orderData.type,
+                    quantity: orderData.quantity,
+                    total_price: orderData.total_price,
+                    proof_url: proofUrl,
+                    status: "pending"
+                }
+            ])
+
+        if (insertError) throw insertError
+
+        notification.classList.add("show")
+
+        setTimeout(() => {
+            notification.classList.remove("show")
+        }, 3000)
+
+    } catch (err) {
+        console.error(err)
+        alert(err.message)
+
+        isSubmitting = false
+        submitProofBtn.disabled = false
+        submitProofBtn.innerText = "Submit"
+
         return
     }
 
-    const { data } = client.storage
-        .from("payment-proofs")
-        .getPublicUrl(fileName)
-
-    const proofUrl = data.publicUrl
-
-    const { error: insertError } = await client
-        .from("orders")
-        .insert([
-            {
-                name: orderData.name,
-                email: orderData.email,
-                phone: orderData.phone,
-                ticket_type: orderData.ticket,
-                bundle_type: orderData.type,
-                quantity: orderData.quantity,
-                total_price: orderData.total_price,
-                proof_url: proofUrl,
-                status: "pending"
-            }
-        ])
-
-    if (insertError) {
-        console.error(insertError)
-        alert(insertError.message)
-        return
-    }
-
-    notification.classList.add("show");
-
-    // Automatically hide after 3 seconds
-    setTimeout(function () {
-        notification.classList.remove("show");
-    }, 3000);
-    submitProofBtn.disabled = true
+    submitProofBtn.innerText = "Submitted!"
 }

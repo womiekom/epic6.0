@@ -163,18 +163,16 @@ async function approveOrder(id, quantity) {
         .update({ status: "approved" })
         .eq("id", id)
 
-    for (let i = 0; i < quantity; i++) {
-
-        const code = generateTicketCode()
-
-        await client
-            .from("tickets")
-            .insert({
-                order_id: id,
-                ticket_code: code
-            })
-
-    }
+    await fetch("http://localhost:3000/generate-ticket", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            order_id: id,
+            quantity: quantity
+        })
+    })
 
     loadOrders()
 }
@@ -190,17 +188,4 @@ async function rejectOrder(id) {
         .eq("id", id)
 
     loadOrders()
-}
-
-function generateTicketCode() {
-
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-    let result = "EPIC6-"
-
-    for (let i = 0; i < 5; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length))
-    }
-
-    return result
 }
