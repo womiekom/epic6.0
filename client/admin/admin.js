@@ -163,7 +163,7 @@ async function approveOrder(id, quantity) {
         .update({ status: "approved" })
         .eq("id", id)
 
-    await fetch("http://localhost:3000/generate-ticket", {
+    await fetch("https://epic60-production.up.railway.app/generate-ticket", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
