@@ -70,7 +70,7 @@ app.post("/generate-ticket", async (req, res) => {
             })
         }
 
-        // SEND EMAIL HERE
+        // SEND EMAIL
         await sendTicketsEmail(
             order.email,
             order.name,
