@@ -17,19 +17,20 @@
             <div class="ticket-grid">
                 <div class="ticket-card">
                     <h2>Presale 1</h2>
-                    <p class="date">16 March - 28 March</p>
-                    <button class="ticket-btn">SEE BUNDLES</button>
+                    <p class="date">Already Closed</p>
                 </div>
                 <div class="ticket-card">
                     <h2>Presale 2</h2>
-                    <p class="date">Coming Soon!</p>
+                    <p class="date" id="ticket-count">Loading...</p>
+                    <div class="ticket-btn" id="ticket-btn">Buy Here</div>
                 </div>
                 <div class="ticket-card">
                     <h2>Normal</h2>
                     <p class="date">Coming Soon!</p>
                 </div>
             </div>
-            <div class="ticket-detail hidden">
+
+            <div class="ticket-detail presale1 hidden" style="display:none;">
                 <h2>Presale 1 Ticket</h2>
                 <div class="ticket-option">
                     <span>1 Ticket</span>
@@ -46,6 +47,36 @@
                     <span>Three Muskepaws (3 Tickets)</span>
                     <span class="price">Rp 150.000</span>
                     <button onclick="goToPurchase('presale1','trio')" class="ticket-btn">BUY</button>
+                </div>
+                <button class="back-btn">Back</button>
+            </div>
+            <div class="ticket-detail presale2 hidden">
+                <h2>Presale 2 Ticket</h2>
+                <div class="ticket-option">
+                    <span>1 Ticket</span>
+                    <span class="price">Rp 95.000</span>
+                    <button onclick="goToPurchase('presale2','solo')" class="ticket-btn">BUY</button>
+                </div>
+                <h3>Bundle</h3>
+                <div class="ticket-option">
+                    <span>Duo Pawtners (2 Tickets)</span>
+                    <span class="price">Rp 180.000</span>
+                    <button onclick="goToPurchase('presale2','duo')" class="ticket-btn">BUY</button>
+                </div>
+                <div class="ticket-option">
+                    <span>Trio Pawventure (3 Tickets)</span>
+                    <span class="price">Rp 270.000</span>
+                    <button onclick="goToPurchase('presale2','trio')" class="ticket-btn">BUY</button>
+                </div>
+                <div class="ticket-option">
+                    <span>Meowdy Five (5 Tickets)</span>
+                    <span class="price">Rp 450.000</span>
+                    <button onclick="goToPurchase('presale2','five')" class="ticket-btn">BUY</button>
+                </div>
+                <div class="ticket-option">
+                    <span>Meowdy Seven (7 Tickets)</span>
+                    <span class="price">Rp 630.000</span>
+                    <button onclick="goToPurchase('presale2','seven')" class="ticket-btn">BUY</button>
                 </div>
                 <button class="back-btn">Back</button>
             </div>

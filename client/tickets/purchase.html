@@ -12,7 +12,41 @@
 </head>
 
 <body>
-    <div id="notification">Upload sent! We will email you the e-ticket soon!</div>
+    <!-- PAYMENT CONFIRM MODAL -->
+    <div class="modal-overlay hidden" id="modal-overlay">
+
+        <div class="modal-box">
+
+            <h2 id="modal-title">Submit Payment</h2>
+
+            <p id="modal-message">
+                Are you sure you want to submit this proof?
+            </p>
+
+            <p class="modal-email">
+                Ticket will be sent to:
+                <span id="modal-email-text"></span>
+            </p>
+
+            <p id="modal-message">
+                Please make sure this email is correct.
+            </p>
+
+            <!-- LOADING -->
+            <div class="modal-loading hidden" id="modal-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing your order...</p>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="modal-buttons" id="modal-buttons">
+                <button id="modal-cancel" class="back-btn">Cancel</button>
+                <button id="modal-submit" class="purchase-btn">Submit</button>
+            </div>
+
+        </div>
+
+    </div>
     <section class="purchase-hero">
         <!-- PURCHASE FORM -->
         <div class="purchase-container" id="purchase-container">

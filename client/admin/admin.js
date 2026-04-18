@@ -16,6 +16,19 @@ const logoutBtn = document.getElementById("logout-btn")
 
 const ordersBody = document.getElementById("orders-body")
 
+const modalOverlay = document.getElementById("modal-overlay")
+const modalTitle = document.getElementById("modal-title")
+const modalMessage = document.getElementById("modal-message")
+
+const modalCancelApprove = document.getElementById("modal-cancel-approve")
+const modalCancelReject = document.getElementById("modal-cancel-reject")
+const modalApprove = document.getElementById("modal-approve")
+const modalReject = document.getElementById("modal-reject")
+
+const modalButtons1 = document.getElementById("modal-buttons1")
+const modalButtons2 = document.getElementById("modal-buttons2")
+const modalLoading = document.getElementById("modal-loading")
+
 console.log(loginContainer)
 console.log(dashboardContainer)
 /* ===============================
@@ -90,6 +103,33 @@ function showLogin() {
 
 }
 
+function showModal(title, message, type) {
+
+    modalTitle.innerText = title
+    modalMessage.innerText = message
+
+    modalOverlay.classList.remove("hidden")
+
+    modalLoading.classList.add("hidden")
+
+    if (type === "approve") {
+        modalButtons1.classList.remove("hidden")
+        modalButtons2.classList.add("hidden")
+    }
+
+    if (type === "reject") {
+        modalButtons2.classList.remove("hidden")
+        modalButtons1.classList.add("hidden")
+    }
+}
+
+function hideModal() {
+    modalOverlay.classList.add("hidden")
+}
+
+modalCancelApprove.onclick = hideModal
+modalCancelReject.onclick = hideModal
+
 /* ===============================
 LOAD ORDERS
 =============================== */
@@ -130,7 +170,6 @@ async function loadOrders() {
             }
         </td>
         `
-
         ordersBody.appendChild(row)
 
     })
@@ -155,26 +194,55 @@ APPROVE ORDER
 
 async function approveOrder(id, quantity) {
 
-    const actionCell = document.getElementById(`action-${id}`)
-    actionCell.innerHTML = "Processing..."
+    showModal(
+        "Approve Order",
+        "Are you sure you want to approve this order and generate tickets?",
+        "approve"
+    )
 
-    await client
-        .from("orders")
-        .update({ status: "approved" })
-        .eq("id", id)
+    modalApprove.onclick = async () => {
 
-    await fetch("http://localhost:3000/generate-ticket", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            order_id: id,
-            quantity: quantity
-        })
-    })
+        modalButtons1.classList.add("hidden")
+        modalLoading.classList.remove("hidden")
 
-    loadOrders()
+        try {
+
+            await client
+                .from("orders")
+                .update({ status: "approved" })
+                .eq("id", id)
+
+            await fetch(
+                "https://epic60-production.up.railway.app/generate-ticket",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        order_id: id,
+                        quantity: quantity
+                    })
+                }
+            )
+
+            modalTitle.innerText = "Success"
+            modalMessage.innerText =
+                "Ticket generated and email sent successfully"
+
+            setTimeout(() => {
+                hideModal()
+                loadOrders()
+            }, 1500)
+
+        } catch (err) {
+
+            modalTitle.innerText = "Error"
+            modalMessage.innerText = "Failed to approve order"
+
+            setTimeout(hideModal, 2000)
+        }
+    }
 }
 
 /* ===============================
@@ -182,10 +250,41 @@ REJECT ORDER
 =============================== */
 
 async function rejectOrder(id) {
-    await client
-        .from("orders")
-        .update({ status: "rejected" })
-        .eq("id", id)
 
-    loadOrders()
+    showModal(
+        "Reject Order",
+        "Are you sure you want to reject this order?",
+        "reject"
+    )
+
+    modalReject.onclick = async () => {
+
+        modalButtons2.classList.add("hidden")
+        modalLoading.classList.remove("hidden")
+
+        try {
+
+            await client
+                .from("orders")
+                .update({ status: "rejected" })
+                .eq("id", id)
+
+            modalTitle.innerText = "Rejected"
+            modalMessage.innerText =
+                "Order has been rejected"
+
+            setTimeout(() => {
+                hideModal()
+                loadOrders()
+            }, 1200)
+
+        } catch (err) {
+
+            modalTitle.innerText = "Error"
+            modalMessage.innerText =
+                "Failed to reject order"
+
+            setTimeout(hideModal, 2000)
+        }
+    }
 }

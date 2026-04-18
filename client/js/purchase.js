@@ -1,4 +1,40 @@
 /* ===============================
+MODAL ELEMENTS
+=============================== */
+
+const modalOverlay = document.getElementById("modal-overlay")
+const modalTitle = document.getElementById("modal-title")
+const modalMessage = document.getElementById("modal-message")
+const modalEmailText = document.getElementById("modal-email-text")
+
+const modalLoading = document.getElementById("modal-loading")
+const modalButtons = document.getElementById("modal-buttons")
+
+const modalCancel = document.getElementById("modal-cancel")
+const modalSubmit = document.getElementById("modal-submit")
+
+function showModal() {
+
+    modalOverlay.classList.remove("hidden")
+
+    modalTitle.innerText = "Submit Payment"
+
+    modalMessage.innerText =
+        "Are you sure you want to submit this proof of payment?"
+
+    modalEmailText.innerText = orderData.email
+
+    modalLoading.classList.add("hidden")
+    modalButtons.classList.remove("hidden")
+}
+
+function hideModal() {
+    modalOverlay.classList.add("hidden")
+}
+
+modalCancel.onclick = hideModal
+
+/* ===============================
 GET TICKET TYPE FROM URL
 =============================== */
 let isSubmitting = false
@@ -8,7 +44,7 @@ const type = params.get("type")
 
 const ticketText = document.getElementById("ticket-type")
 
-const bundleConfig = {
+const bundleConfig1 = {
     solo: {
         quantity: 1,
         price: 55000
@@ -23,6 +59,29 @@ const bundleConfig = {
     }
 }
 
+const bundleConfig2 = {
+    solo: {
+        quantity: 1,
+        price: 95000
+    },
+    duo: {
+        quantity: 2,
+        price: 180000
+    },
+    trio: {
+        quantity: 3,
+        price: 270000
+    },
+    five: {
+        quantity: 5,
+        price: 450000
+    },
+    seven: {
+        quantity: 7,
+        price: 630000
+    }
+}
+
 // safety check
 if (!type) {
     ticketText.innerText = "Unknown Ticket"
@@ -31,10 +90,16 @@ if (!type) {
         ticketText.innerText = "1 Ticket"
     }
     else if (type === "duo") {
-        ticketText.innerText = "Duo Quest (2 Tickets)"
+        ticketText.innerText = "Duo Pawtners (2 Tickets)"
     }
     else if (type === "trio") {
-        ticketText.innerText = "Three Muskepaws (3 Tickets)"
+        ticketText.innerText = "Three Pawventure (3 Tickets)"
+    }
+    else if (type === "five") {
+        ticketText.innerText = "Meowdy Five (5 Tickets)"
+    }
+    else if (type === "seven") {
+        ticketText.innerText = "Meowdy Seven (7 Tickets)"
     }
 }
 
@@ -58,7 +123,12 @@ form.addEventListener("submit", function (e) {
     const email = document.getElementById("email").value
     const phone = document.getElementById("phone").value
 
-    const bundle = bundleConfig[type]
+    const bundle = bundleConfig2[type]
+
+    if (!bundle) {
+        alert("Invalid ticket type")
+        return
+    }
 
     orderData = {
         name: name,
@@ -112,35 +182,64 @@ const client = createClient(supabaseUrl, supabaseKey)
 
 const submitProofBtn = document.getElementById("submit-proof")
 
-submitProofBtn.addEventListener("click", submitOrder)
+function showError(message) {
+    modalOverlay.classList.remove("hidden") // ← pastiin modal selalu muncul
+
+    modalLoading.classList.add("hidden")
+
+    modalTitle.innerText = "Failed"
+    modalMessage.innerText = message
+    modalEmailText.innerText = orderData.email
+
+    modalButtons.classList.add("hidden")
+
+    isSubmitting = false
+    submitProofBtn.disabled = false
+    submitProofBtn.innerText = "Submit"
+
+    setTimeout(() => {
+        hideModal()
+    }, 2000)
+}
+
+submitProofBtn.addEventListener("click", function () {
+    if (!orderData.email) {
+        showError("Please fill purchase form first")
+        return
+    }
+    showModal()
+})
+
+modalSubmit.addEventListener("click", submitOrder)
 async function submitOrder() {
 
     if (isSubmitting) return
     isSubmitting = true
 
+    modalButtons.classList.add("hidden")
+    modalLoading.classList.remove("hidden")
+
     const fileInput = document.getElementById("proof")
     const file = fileInput.files[0]
-    const notification = document.getElementById("notification")
 
     submitProofBtn.disabled = true
     submitProofBtn.innerText = "Processing..."
 
     if (!file) {
-        alert("Please upload proof of payment")
-        isSubmitting = false
-        submitProofBtn.disabled = false
+        showError("Please upload proof of payment")
         return
     }
 
     if (file.size > 2000000) {
-        alert("File too large (max 2MB)")
-        isSubmitting = false
-        submitProofBtn.disabled = false
+        showError("Please upload file under 2MB")
         return
     }
 
     try {
 
+        // =========================
+        // 1. UPLOAD FILE
+        // =========================
         const fileName = Date.now() + "_" + file.name
 
         const { error: uploadError } = await client.storage
@@ -157,40 +256,55 @@ async function submitOrder() {
 
         const proofUrl = data.publicUrl
 
-        const { error: insertError } = await client
-            .from("orders")
-            .insert([
-                {
-                    name: orderData.name,
-                    email: orderData.email,
-                    phone: orderData.phone,
-                    ticket_type: orderData.ticket,
-                    bundle_type: orderData.type,
-                    quantity: orderData.quantity,
-                    total_price: orderData.total_price,
-                    proof_url: proofUrl,
-                    status: "pending"
-                }
-            ])
+        // =========================
+        // 2. SEND TO BACKEND (QUOTA CHECK HERE)
+        // =========================
+        const res = await fetch("https://epic60-production.up.railway.app/create-order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: orderData.name,
+                email: orderData.email,
+                phone: orderData.phone,
+                ticket_type: orderData.ticket,
+                bundle_type: orderData.type,
+                quantity: orderData.quantity,
+                total_price: orderData.total_price,
+                proof_url: proofUrl
+            })
+        })
 
-        if (insertError) throw insertError
+        const result = await res.json()
 
-        notification.classList.add("show")
+        if (!res.ok) {
+            showError(result.error || "Tickets sold out")
+            return
+        }
+
+        // =========================
+        // 3. SUCCESS UI
+        // =========================
+        modalLoading.classList.add("hidden")
+
+        modalTitle.innerText = "Success"
+        modalMessage.innerText =
+            "Upload sent! We will email the e-ticket soon."
+
+        modalEmailText.innerText = orderData.email
+
+        submitProofBtn.innerText = "Submitted!"
+
+        isSubmitting = false
 
         setTimeout(() => {
-            notification.classList.remove("show")
+            window.location.href = "../index.html"
         }, 3000)
 
     } catch (err) {
         console.error(err)
-        alert(err.message)
-
-        isSubmitting = false
-        submitProofBtn.disabled = false
-        submitProofBtn.innerText = "Submit"
-
-        return
+        showError("Failed to send, please resend it")
     }
 
-    submitProofBtn.innerText = "Submitted!"
 }

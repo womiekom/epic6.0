@@ -70,7 +70,7 @@ app.post("/generate-ticket", async (req, res) => {
             })
         }
 
-        // 🔥 SEND EMAIL HERE
+        // SEND EMAIL HERE
         await sendTicketsEmail(
             order.email,
             order.name,
@@ -86,4 +86,83 @@ app.post("/generate-ticket", async (req, res) => {
 
 })
 
-app.listen(3000, () => console.log("Server running on port 3000"))
+app.post("/create-order", async (req, res) => {
+
+    const {
+        name,
+        email,
+        phone,
+        ticket_type,
+        bundle_type,
+        quantity,
+        total_price,
+        proof_url
+    } = req.body
+
+    try {
+
+        const { data: orders } = await supabase
+            .from("orders")
+            .select("quantity")
+            .eq("ticket_type", ticket_type)
+            .in("status", ["pending", "approved"])
+
+        const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
+
+        if (totalSold + quantity > 450) {
+            return res.status(400).json({
+                error: "Tickets sold out"
+            })
+        }
+
+        const { data, error } = await supabase
+            .from("orders")
+            .insert({
+                name,
+                email,
+                phone,
+                ticket_type,
+                bundle_type,
+                quantity,
+                total_price,
+                proof_url,
+                status: "pending"
+            })
+            .select()
+
+        if (error) throw error
+
+        res.json({ success: true, data })
+
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+
+})
+
+app.get("/tickets-left", async (req, res) => {
+
+    try {
+
+        const { data: orders } = await supabase
+            .from("orders")
+            .select("quantity")
+            .eq("ticket_type", "presale2")
+            .in("status", ["pending", "approved"])
+
+        const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
+
+        const total = 450
+        const left = total - totalSold
+
+        res.json({ total, sold: totalSold, left })
+
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+
+})
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => console.log(`Server running on ${PORT}`))

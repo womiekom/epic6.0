@@ -231,22 +231,77 @@
     }
 }
 
-#notification {
+/* ================================
+MODAL OVERLAY
+================================ */
+
+.modal-overlay {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(to right, #ff4d6d, #ff7aa2);
-    color: white;
-    transition: transform 0.3s ease;
-    transform: translateX(200%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     z-index: 999;
-    /* Hidden state */
 }
 
-#notification.show {
-    transform: translateX(0);
-    /* Visible state */
+/* ================================
+MODAL BOX
+================================ */
+
+.modal-box {
+    background: purple;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 90%;
+    max-width: 420px;
+}
+
+/* ================================
+EMAIL TEXT
+================================ */
+
+.modal-email {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+#modal-email-text {
+    color: #fffc3a;
+    font-weight: bold;
+}
+
+/* ================================
+BUTTONS
+================================ */
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* ================================
+LOADING
+================================ */
+
+.modal-loading {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* hidden */
+
+.hidden {
+    display: none;
 }

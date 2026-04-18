@@ -6,6 +6,38 @@
 </head>
 
 <body>
+    <!-- ===============================
+NOTIFICATION MODEL
+=============================== -->
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+
+        <div class="modal-box">
+
+            <h3 id="modal-title">Confirm Action</h3>
+
+            <p id="modal-message">
+                Are you sure you want to approve this order?
+            </p>
+
+            <div id="modal-loading" class="modal-loading hidden">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            <div class="modal-buttons">
+                <div id="modal-buttons1" class="modal-buttons1">
+                    <button id="modal-cancel-approve">Cancel</button>
+                    <button id="modal-approve">Approve</button>
+                </div>
+
+                <div id="modal-buttons2" class="modal-buttons2">
+                    <button id="modal-cancel-reject">Cancel</button>
+                    <button id="modal-reject">Reject</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- LOGIN SCREEN -->
     <div id="login-container" class="login-container">
         <div class="login-box">
