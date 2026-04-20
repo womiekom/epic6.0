@@ -51,7 +51,7 @@ function goToPurchase(ticket, type) {
 async function loadTicketCount() {
 
     try {
-        const res = await fetch("https://epic60-production.up.railway.app/tickets-left")
+        const res = await fetch("https://epic60-production-0374.up.railway.app/tickets-left")
         const data = await res.json()
 
         const el = document.getElementById("ticket-count")

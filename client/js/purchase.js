@@ -259,7 +259,7 @@ async function submitOrder() {
         // =========================
         // 2. SEND TO BACKEND (QUOTA CHECK HERE)
         // =========================
-        const res = await fetch("https://epic60-production.up.railway.app/create-order", {
+        const res = await fetch("https://epic60-production-0374.up.railway.app/create-order", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

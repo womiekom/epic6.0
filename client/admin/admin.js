@@ -204,7 +204,7 @@ async function approveOrder(id, quantity) {
 
         modalButtons1.classList.add("hidden")
         modalLoading.classList.remove("hidden")
-        await fetch("https://epic60-production.up.railway.app/generate-ticket", {
+        await fetch("https://epic60-production-0374.up.railway.app/generate-ticket", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -223,7 +223,7 @@ async function approveOrder(id, quantity) {
                 .eq("id", id)
 
             await fetch(
-                "https://epic60-production.up.railway.app/generate-ticket",
+                "https://epic60-production-0374.up.railway.app/generate-ticket",
                 {
                     method: "POST",
                     headers: {
