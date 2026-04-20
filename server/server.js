@@ -109,7 +109,7 @@ app.post("/create-order", async (req, res) => {
 
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
-        if (totalSold + quantity > 450) {
+        if (totalSold + quantity > 300) {
             return res.status(400).json({
                 error: "Tickets sold out"
             })
@@ -152,7 +152,7 @@ app.get("/tickets-left", async (req, res) => {
 
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
-        const total = 450
+        const total = 300
         const left = total - totalSold
 
         res.json({ total, sold: totalSold, left })
