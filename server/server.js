@@ -3,10 +3,25 @@ require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const { createClient } = require("@supabase/supabase-js")
+const sendTicketsEmail = require("./sendTickets")
 const generateTicket = require("./generateTicket")
+const rateLimit = require("express-rate-limit")
 
 const app = express()
-app.use(cors())
+
+app.use(rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+}))
+
+app.use(cors({
+    origin: [
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "https://ekapaksicup.site"
+    ]
+}))
+
 app.use(express.json())
 
 const supabase = createClient(
@@ -14,7 +29,31 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE
 )
 
-// GENERATE RANDOM CODE IN BACKEND 
+/* ===============================
+AUTH MIDDLEWARE
+=============================== */
+
+async function verifyUser(req, res, next) {
+    const token = req.headers.authorization?.split(" ")[1]
+
+    if (!token) {
+        return res.status(401).json({ error: "No token" })
+    }
+
+    const { data, error } = await supabase.auth.getUser(token)
+
+    if (error || !data.user) {
+        return res.status(401).json({ error: "Unauthorized" })
+    }
+
+    req.user = data.user
+    next()
+}
+
+/* ===============================
+UTIL
+=============================== */
+
 function generateTicketCode() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     let result = "EPIC6-"
@@ -24,80 +63,57 @@ function generateTicketCode() {
     return result
 }
 
-// MAIN ENDPOINT
-const sendTicketsEmail = require("./sendTickets")
+/* ===============================
+GENERATE LOGIC
+=============================== */
 
-app.post("/generate-ticket", async (req, res) => {
+async function generateTickets(order) {
 
-    const { order_id, quantity } = req.body
+    const { data: existing } = await supabase
+        .from("tickets")
+        .select("*")
+        .eq("order_id", order.id)
 
-    try {
-
-        const { data: existing } = await supabase
-            .from("tickets")
-            .select("*")
-            .eq("order_id", order_id)
-
-        if (existing.length > 0) {
-            return res.json({ message: "Tickets already exist" })
-        }
-
-        // ambil data order (buat email)
-        const { data: order } = await supabase
-            .from("orders")
-            .select("*")
-            .eq("id", order_id)
-            .single()
-
-        const results = []
-
-        for (let i = 0; i < quantity; i++) {
-
-            const code = generateTicketCode()
-            const ticketUrl = await generateTicket(code, supabase)
-
-            await supabase
-                .from("tickets")
-                .insert({
-                    order_id,
-                    ticket_code: code,
-                    ticket_url: ticketUrl,
-                })
-
-            results.push({
-                ticket_code: code,
-                ticket_url: ticketUrl
-            })
-        }
-
-        // SEND EMAIL
-        await sendTicketsEmail(
-            order.email,
-            order.name,
-            results
-        )
-
-        res.json({ success: true, tickets: results })
-
-    } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: "Failed to generate ticket" })
+    if (existing.length >= order.quantity) {
+        return
     }
 
-})
+    const results = []
+
+    for (let i = 0; i < order.quantity; i++) {
+
+        const code = generateTicketCode()
+        const ticketUrl = await generateTicket(code, supabase)
+
+        await supabase
+            .from("tickets")
+            .insert({
+                order_id: order.id,
+                ticket_code: code,
+                ticket_url: ticketUrl,
+            })
+
+        results.push({ ticket_code: code, ticket_url: ticketUrl })
+    }
+
+    await sendTicketsEmail(order.email, order.name, results)
+}
+
+/* ===============================
+CREATE ORDER
+=============================== */
 
 app.post("/create-order", async (req, res) => {
 
-    const {
-        name,
-        email,
-        phone,
-        ticket_type,
-        bundle_type,
-        quantity,
-        total_price,
-        proof_url
-    } = req.body
+    const { name, email, phone, ticket_type, bundle_type, quantity, total_price, proof_url } = req.body
+
+    if (!name || !email || !phone) {
+        return res.status(400).json({ error: "Missing fields" })
+    }
+
+    if (quantity <= 0 || quantity > 10) {
+        return res.status(400).json({ error: "Invalid quantity" })
+    }
 
     try {
 
@@ -110,9 +126,7 @@ app.post("/create-order", async (req, res) => {
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
         if (totalSold + quantity > 300) {
-            return res.status(400).json({
-                error: "Tickets sold out"
-            })
+            return res.status(400).json({ error: "Sold out" })
         }
 
         const { data, error } = await supabase
@@ -137,8 +151,50 @@ app.post("/create-order", async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
-
 })
+
+/* ===============================
+APPROVE ORDER
+=============================== */
+
+app.post("/approve-order", verifyUser, async (req, res) => {
+
+    const { order_id } = req.body
+
+    try {
+
+        const { data: order } = await supabase
+            .from("orders")
+            .select("*")
+            .eq("id", order_id)
+            .single()
+
+        if (!order) {
+            return res.status(404).json({ error: "Order not found" })
+        }
+
+        if (order.status === "approved") {
+            return res.json({ message: "Already approved" })
+        }
+
+        await supabase
+            .from("orders")
+            .update({ status: "approved" })
+            .eq("id", order_id)
+
+        await generateTickets(order)
+
+        res.json({ success: true })
+
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: "Failed to approve order" })
+    }
+})
+
+/* ===============================
+TICKETS LEFT
+=============================== */
 
 app.get("/tickets-left", async (req, res) => {
 
@@ -152,17 +208,16 @@ app.get("/tickets-left", async (req, res) => {
 
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
-        const total = 300
-        const left = total - totalSold
-
-        res.json({ total, sold: totalSold, left })
+        res.json({
+            total: 300,
+            sold: totalSold,
+            left: 300 - totalSold
+        })
 
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
-
 })
 
 const PORT = process.env.PORT || 3000
-
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))

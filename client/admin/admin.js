@@ -29,14 +29,11 @@ const modalButtons1 = document.getElementById("modal-buttons1")
 const modalButtons2 = document.getElementById("modal-buttons2")
 const modalLoading = document.getElementById("modal-loading")
 
-console.log(loginContainer)
-console.log(dashboardContainer)
 /* ===============================
 LOGIN
 =============================== */
 
 loginForm.addEventListener("submit", async (e) => {
-
     e.preventDefault()
 
     const email = document.getElementById("admin-email").value
@@ -54,62 +51,48 @@ loginForm.addEventListener("submit", async (e) => {
 
     showDashboard()
     loadOrders()
-
 })
 
 /* ===============================
-SESSION CHECK
+SESSION
 =============================== */
 
 async function checkSession() {
-
     const { data } = await client.auth.getSession()
-
     if (data.session) {
         showDashboard()
         loadOrders()
     }
-
 }
-
 checkSession()
 
 client.auth.onAuthStateChange((event, session) => {
-
     if (session) {
         showDashboard()
         loadOrders()
     } else {
         showLogin()
     }
-
 })
 
 /* ===============================
-UI STATE CONTROL
+UI
 =============================== */
 
 function showDashboard() {
-
     loginContainer.classList.add("hidden")
     dashboardContainer.classList.remove("hidden")
-
 }
 
 function showLogin() {
-
     dashboardContainer.classList.add("hidden")
     loginContainer.classList.remove("hidden")
-
 }
 
 function showModal(title, message, type) {
-
     modalTitle.innerText = title
     modalMessage.innerText = message
-
     modalOverlay.classList.remove("hidden")
-
     modalLoading.classList.add("hidden")
 
     if (type === "approve") {
@@ -135,21 +118,16 @@ LOAD ORDERS
 =============================== */
 
 async function loadOrders() {
-
     const { data, error } = await client
         .from("orders")
         .select("*")
         .order("created_at", { ascending: false })
 
-    if (error) {
-        console.error(error)
-        return
-    }
+    if (error) return console.error(error)
 
     ordersBody.innerHTML = ""
 
     data.forEach(order => {
-
         const row = document.createElement("tr")
 
         row.innerHTML = `
@@ -162,18 +140,16 @@ async function loadOrders() {
         <td>${order.total_price}</td>
         <td><a href="${order.proof_url}" target="_blank">View</a></td>
         <td>${order.status}</td>
-        <td id="action-${order.id}">
+        <td>
         ${order.status === "pending"
-                ? `<button onclick="approveOrder('${order.id}', ${order.quantity})">Approve</button>
+                ? `<button onclick="approveOrder('${order.id}')">Approve</button>
                <button onclick="rejectOrder('${order.id}')">Reject</button>`
-                : "Processed"
-            }
+                : "Processed"}
         </td>
         `
+
         ordersBody.appendChild(row)
-
     })
-
 }
 
 /* ===============================
@@ -181,64 +157,37 @@ LOGOUT
 =============================== */
 
 logoutBtn.addEventListener("click", async () => {
-
     await client.auth.signOut()
-
     showLogin()
-
 })
 
 /* ===============================
-APPROVE ORDER
+APPROVE
 =============================== */
 
-async function approveOrder(id, quantity) {
+async function approveOrder(id) {
 
-    showModal(
-        "Approve Order",
-        "Are you sure you want to approve this order and generate tickets?",
-        "approve"
-    )
+    showModal("Approve Order", "Generate ticket?", "approve")
 
     modalApprove.onclick = async () => {
 
         modalButtons1.classList.add("hidden")
         modalLoading.classList.remove("hidden")
-        await fetch("https://epic60-production-0374.up.railway.app/generate-ticket", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                order_id: id,
-                quantity: quantity
-            })
-        })
 
         try {
+            const { data } = await client.auth.getSession()
 
-            await client
-                .from("orders")
-                .update({ status: "approved" })
-                .eq("id", id)
-
-            await fetch(
-                "https://epic60-production-0374.up.railway.app/generate-ticket",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        order_id: id,
-                        quantity: quantity
-                    })
-                }
-            )
+            await fetch("https://epic60-production-0374.up.railway.app/approve-order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${data.session.access_token}`
+                },
+                body: JSON.stringify({ order_id: id })
+            })
 
             modalTitle.innerText = "Success"
-            modalMessage.innerText =
-                "Ticket generated and email sent successfully"
+            modalMessage.innerText = "Ticket generated!"
 
             setTimeout(() => {
                 hideModal()
@@ -246,9 +195,8 @@ async function approveOrder(id, quantity) {
             }, 1500)
 
         } catch (err) {
-
             modalTitle.innerText = "Error"
-            modalMessage.innerText = "Failed to approve order"
+            modalMessage.innerText = "Failed"
 
             setTimeout(hideModal, 2000)
         }
@@ -256,16 +204,11 @@ async function approveOrder(id, quantity) {
 }
 
 /* ===============================
-REJECT ORDER
+REJECT
 =============================== */
 
 async function rejectOrder(id) {
-
-    showModal(
-        "Reject Order",
-        "Are you sure you want to reject this order?",
-        "reject"
-    )
+    showModal("Reject Order", "Are you sure?", "reject")
 
     modalReject.onclick = async () => {
 
@@ -273,29 +216,23 @@ async function rejectOrder(id) {
         modalLoading.classList.remove("hidden")
 
         try {
-
             await client
                 .from("orders")
                 .update({ status: "rejected" })
                 .eq("id", id)
 
             modalTitle.innerText = "Rejected"
-            modalMessage.innerText =
-                "Order has been rejected"
 
             setTimeout(() => {
                 hideModal()
                 loadOrders()
             }, 1200)
 
-        } catch (err) {
-
+        } catch {
             modalTitle.innerText = "Error"
-            modalMessage.innerText =
-                "Failed to reject order"
-
             setTimeout(hideModal, 2000)
         }
     }
 }
+
 loadOrders()
