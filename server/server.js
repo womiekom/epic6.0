@@ -30,9 +30,8 @@ const supabase = createClient(
 )
 
 /* ===============================
-AUTH MIDDLEWARE
+AUTH CHECK
 =============================== */
-
 async function verifyUser(req, res, next) {
     const token = req.headers.authorization?.split(" ")[1]
 
@@ -51,9 +50,21 @@ async function verifyUser(req, res, next) {
 }
 
 /* ===============================
+ADMIN CHECK (IMPORTANT)
+=============================== */
+function verifyAdmin(req, res, next) {
+    const ADMIN_EMAIL = "ISI_EMAIL_ADMIN_LU"
+
+    if (req.user.email !== ADMIN_EMAIL) {
+        return res.status(403).json({ error: "Not admin" })
+    }
+
+    next()
+}
+
+/* ===============================
 UTIL
 =============================== */
-
 function generateTicketCode() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     let result = "EPIC6-"
@@ -63,10 +74,6 @@ function generateTicketCode() {
     return result
 }
 
-/* ===============================
-GENERATE LOGIC
-=============================== */
-
 async function generateTickets(order) {
 
     const { data: existing } = await supabase
@@ -74,9 +81,7 @@ async function generateTickets(order) {
         .select("*")
         .eq("order_id", order.id)
 
-    if (existing.length >= order.quantity) {
-        return
-    }
+    if (existing.length >= order.quantity) return
 
     const results = []
 
@@ -102,7 +107,6 @@ async function generateTickets(order) {
 /* ===============================
 CREATE ORDER
 =============================== */
-
 app.post("/create-order", async (req, res) => {
 
     const { name, email, phone, ticket_type, bundle_type, quantity, total_price, proof_url } = req.body
@@ -154,10 +158,9 @@ app.post("/create-order", async (req, res) => {
 })
 
 /* ===============================
-APPROVE ORDER
+APPROVE ORDER (SECURE)
 =============================== */
-
-app.post("/approve-order", verifyUser, async (req, res) => {
+app.post("/approve-order", verifyUser, verifyAdmin, async (req, res) => {
 
     const { order_id } = req.body
 
@@ -193,31 +196,7 @@ app.post("/approve-order", verifyUser, async (req, res) => {
 })
 
 /* ===============================
-TICKETS LEFT
+RUN SERVER
 =============================== */
-
-app.get("/tickets-left", async (req, res) => {
-
-    try {
-
-        const { data: orders } = await supabase
-            .from("orders")
-            .select("quantity")
-            .eq("ticket_type", "presale2")
-            .in("status", ["pending", "approved"])
-
-        const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
-
-        res.json({
-            total: 300,
-            sold: totalSold,
-            left: 300 - totalSold
-        })
-
-    } catch (err) {
-        res.status(500).json({ error: err.message })
-    }
-})
-
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Server running on ${PORT}`))

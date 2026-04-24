@@ -1,5 +1,5 @@
 const supabaseUrl = "https://gzrjjjjzojjvxpgalgzp.supabase.co"
-const supabaseKey = "sb_publishable_sp8LBo0QCA4Z9PKhd2nVOA_dRRin-Mg"
+const supabaseKey = "PASTE_PUBLIC_ANON_KEY_LU"
 
 const { createClient } = supabase
 const client = createClient(supabaseUrl, supabaseKey)
@@ -39,10 +39,7 @@ loginForm.addEventListener("submit", async (e) => {
     const email = document.getElementById("admin-email").value
     const password = document.getElementById("admin-password").value
 
-    const { error } = await client.auth.signInWithPassword({
-        email,
-        password
-    })
+    const { error } = await client.auth.signInWithPassword({ email, password })
 
     if (error) {
         alert("Login failed")
@@ -143,7 +140,7 @@ async function loadOrders() {
         <td>
         ${order.status === "pending"
                 ? `<button onclick="approveOrder('${order.id}')">Approve</button>
-               <button onclick="rejectOrder('${order.id}')">Reject</button>`
+                   <button onclick="rejectOrder('${order.id}')">Reject</button>`
                 : "Processed"}
         </td>
         `
@@ -162,7 +159,7 @@ logoutBtn.addEventListener("click", async () => {
 })
 
 /* ===============================
-APPROVE
+APPROVE (SECURE)
 =============================== */
 
 async function approveOrder(id) {
@@ -197,7 +194,6 @@ async function approveOrder(id) {
         } catch (err) {
             modalTitle.innerText = "Error"
             modalMessage.innerText = "Failed"
-
             setTimeout(hideModal, 2000)
         }
     }
