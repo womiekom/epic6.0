@@ -53,7 +53,7 @@ async function verifyUser(req, res, next) {
 ADMIN CHECK (IMPORTANT)
 =============================== */
 function verifyAdmin(req, res, next) {
-    const ADMIN_EMAIL = "ISI_EMAIL_ADMIN_LU"
+    const ADMIN_EMAIL = "ekapaksicup6.0@gmail.com"
 
     if (req.user.email !== ADMIN_EMAIL) {
         return res.status(403).json({ error: "Not admin" })
