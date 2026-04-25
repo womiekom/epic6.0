@@ -123,15 +123,3 @@ BACKGROUND SYSTEM FIX
         background: url('../assets/Background/Registration/HP.webp') center top/cover no-repeat fixed;
     }
 }
-
-/* biar gak terlalu "berat" di mobile */
-@media (max-width: 480px) {
-    h1 {
-        font-size: 18px;
-    }
-
-    .container {
-        padding: 20px;
-        width: 280px;
-    }
-}
