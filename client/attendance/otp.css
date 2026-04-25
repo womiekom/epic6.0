@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rye', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTAINER (SAMA PERSIS FEELING NYA) */
+.container {
+    width: 320px;
+    padding: 50px 40px;
+    border-radius: 15px;
+
+    background: linear-gradient(to right,
+            rgba(87, 0, 145, 0.35),
+            rgba(229, 32, 255, 0.35));
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    text-align: center;
+}
+
+/* TITLE */
+h1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* OTP BOX */
+.otp-box {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+
+    font-size: 40px;
+    letter-spacing: 6px;
+    font-weight: bold;
+}
+
+/* STATUS */
+#status {
+    margin-top: 15px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* BACKGROUND (SAMA PERSIS ATTENDANCE) */
+@media (min-width: 768px) {
+    body {
+        background: url('../assets/Background/Registration/Desktop.webp') center/cover no-repeat fixed;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        background: url('../assets/Background/Registration/HP.webp') center top/cover no-repeat fixed;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 280px;
+        padding: 25px;
+    }
+
+    .otp-box {
+        font-size: 32px;
+    }
+}

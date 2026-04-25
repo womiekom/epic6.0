@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rye', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTAINER */
+.container {
+    width: 320px;
+    padding: 30px;
+    border-radius: 12px;
+    background: linear-gradient(to right,
+            rgba(87, 0, 145, 0.35),
+            rgba(229, 32, 255, 0.35));
+    padding: 50px 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(6px);
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+h1 {
+    padding: 20px;
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* INPUT */
+input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+/* BUTTON */
+button {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(to right, #fcad1c, #fffc3a);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    cursor: pointer;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.8),
+            transparent);
+    animation: shine-left 0.6s forwards;
+    animation-play-state: paused;
+}
+
+button:hover::before {
+    animation: shine-right 0.6s forwards;
+    animation-play-state: running;
+}
+
+@keyframes shine-right {
+    100% {
+        left: 150%;
+    }
+}
+
+@keyframes shine-left {
+    0% {
+        left: 150%;
+    }
+
+    100% {
+        left: -100%;
+    }
+}
+
+/* STATUS */
+#status {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* =========================
+BACKGROUND SYSTEM FIX
+========================= */
+
+/* Desktop */
+@media (min-width: 768px) {
+    body {
+        background: url('../assets/Background/Registration/Desktop.webp') center/cover no-repeat fixed;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    body {
+        background: url('../assets/Background/Registration/HP.webp') center top/cover no-repeat fixed;
+    }
+}
+
+/* biar gak terlalu "berat" di mobile */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 18px;
+    }
+
+    .container {
+        padding: 20px;
+        width: 280px;
+    }
+}
