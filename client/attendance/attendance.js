@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyd8sDhqLsOkRqBtpo3ARdnMXtLyAdr8GsLy7RPxErcB_y5XZg-Pc71pf8Z7ryYuP3l/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4n1KoOafDv9G4naqLn_zaIdurgUupmX82lFNonqVbUxLbNa7ENCupyIq4KnWJr8VC/exec";
 
 const form = document.getElementById("absenForm");
 const statusText = document.getElementById("status");
