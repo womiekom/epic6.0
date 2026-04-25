@@ -18,4 +18,4 @@ async function fetchOTP() {
 }
 
 fetchOTP();
-setInterval(fetchOTP, 10000);
+setInterval(fetchOTP, 30000);
