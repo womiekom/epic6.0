@@ -207,7 +207,7 @@ app.get("/tickets-left", async (req, res) => {
 
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
-        const total = 450
+        const total = 300
         const left = total - totalSold
 
         res.json({ total, sold: totalSold, left })
