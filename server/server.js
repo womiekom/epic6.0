@@ -195,6 +195,29 @@ app.post("/approve-order", verifyUser, verifyAdmin, async (req, res) => {
     }
 })
 
+app.get("/tickets-left", async (req, res) => {
+
+    try {
+
+        const { data: orders } = await supabase
+            .from("orders")
+            .select("quantity")
+            .eq("ticket_type", "presale2")
+            .in("status", ["pending", "approved"])
+
+        const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
+
+        const total = 450
+        const left = total - totalSold
+
+        res.json({ total, sold: totalSold, left })
+
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+
+})
+
 /* ===============================
 RUN SERVER
 =============================== */
