@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwO_Z_THhRWjR3qsZGQuE_LXgroRnNGEPHUs6zrYTLGa89X4q0TFZq0eMesunlX8tG3/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzLLZZ9jdIyVCTENEUqF5W0dPH6BQFN9scrlCFgfgG5wKnuA6BGWkiNgHoCrPuWf_4c/exec";
 
 const otpEl = document.getElementById("otp");
 const statusEl = document.getElementById("status");
