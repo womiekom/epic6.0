@@ -129,9 +129,9 @@ app.post("/create-order", async (req, res) => {
 
         const totalSold = orders.reduce((sum, o) => sum + o.quantity, 0)
 
-        if (totalSold + quantity > 300) {
-            return res.status(400).json({ error: "Sold out" })
-        }
+        // if (totalSold + quantity > 300) {
+        //     return res.status(400).json({ error: "Sold out" })
+        // }
 
         const { data, error } = await supabase
             .from("orders")
