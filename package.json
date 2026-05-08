@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.105.3",
+    "dotenv": "^17.4.2",
+    "uuid": "^14.0.0"
+  }
+}
