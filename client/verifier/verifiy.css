@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background: #0f172a;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.container {
+
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =========================
+QR READER
+========================= */
+
+#reader {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    border: 2px solid rgba(255, 255, 255, 0.1);
+
+    background: #111827;
+}
+
+/* =========================
+RESULT BOX
+========================= */
+
+#resultBox {
+
+    padding: 30px 20px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    transition: 0.2s ease;
+
+    min-height: 160px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+#resultText {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#ticketText {
+    font-size: 1rem;
+    opacity: 0.9;
+    word-break: break-word;
+}
+
+/* =========================
+STATES
+========================= */
+
+.idle {
+    background: #1e293b;
+}
+
+.valid {
+    background: #16a34a;
+}
+
+.invalid {
+    background: #dc2626;
+}
+
+.used {
+    background: #ca8a04;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #resultText {
+        font-size: 1.5rem;
+    }
+
+    #resultBox {
+        min-height: 140px;
+        padding: 24px 16px;
+    }
+}

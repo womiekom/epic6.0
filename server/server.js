@@ -6,6 +6,7 @@ const { createClient } = require("@supabase/supabase-js")
 const sendTicketsEmail = require("./sendTickets")
 const generateTicket = require("./generateTicket")
 const rateLimit = require("express-rate-limit")
+const verifyTicketRoute = require("./routes/verifyTicket")
 
 const app = express()
 
@@ -217,6 +218,23 @@ app.get("/tickets-left", async (req, res) => {
     }
 
 })
+
+// =========================
+// HEALTH CHECK
+// =========================
+app.get("/", (req, res) => {
+    res.json({
+        success: true,
+        message: "EPIC Verification API Running"
+    })
+})
+
+// =========================
+// VERIFY ROUTE
+// =========================
+app.use("/verify-ticket", verifyTicketRoute)
+
+
 
 /* ===============================
 RUN SERVER

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>EPIC Ticket Verifier</title>
+
+    <link rel="stylesheet" href="verifiy.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- CAMERA -->
+        <div id="reader"></div>
+
+        <!-- RESULT -->
+        <div id="resultBox" class="idle">
+
+            <h2 id="resultText">
+                Waiting for scan...
+            </h2>
+
+            <p id="ticketText"></p>
+
+        </div>
+
+    </div>
+
+    <!-- QR LIBRARY -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- VERIFY LOGIC -->
+    <script src="verify.js"></script>
+
+</body>
+
+</html>
