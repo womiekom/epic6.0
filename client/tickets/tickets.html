@@ -25,7 +25,7 @@
                 </div>
                 <div class="ticket-card">
                     <h2>Normal</h2>
-                    <p class="date">Coming Soon!</p>
+                    <div class="ticket-btn" id="ticket-btn">Buy Here</div>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                 </div>
                 <button class="back-btn">Back</button>
             </div>
-            <div class="ticket-detail presale2 hidden">
+            <div class="ticket-detail presale2 hidden" style="display:none;">
                 <h2>Presale 2 Ticket</h2>
                 <div class="ticket-option">
                     <span>1 Ticket</span>
@@ -76,6 +76,15 @@
                     <span>Meowdy Seven (7 Tickets)</span>
                     <span class="price">Rp 630.000</span>
                     <button onclick="goToPurchase('presale2','seven')" class="ticket-btn">BUY</button>
+                </div>
+                <button class="back-btn">Back</button>
+            </div>
+            <div class="ticket-detail normal hidden">
+                <h2>Normal Ticket</h2>
+                <div class="ticket-option">
+                    <span>1 Ticket</span>
+                    <span class="price">Rp 120.000</span>
+                    <button onclick="goToPurchase('normal','solo')" class="ticket-btn">BUY</button>
                 </div>
                 <button class="back-btn">Back</button>
             </div>

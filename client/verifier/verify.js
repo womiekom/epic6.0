@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/verify-ticket"
+const API_URL = "https://epic60-production-0374.up.railway.app/verify-ticket"
 
 const resultBox = document.getElementById("resultBox")
 const resultText = document.getElementById("resultText")

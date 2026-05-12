@@ -82,24 +82,53 @@ const bundleConfig2 = {
     }
 }
 
+const bundleConfig3 = {
+    solo: {
+        quantity: 1,
+        price: 120000
+    }
+}
+
 // safety check
+// if (!type) {
+//     ticketText.innerText = "Unknown Ticket"
+// } else {
+//     if (type === "solo") {
+//         ticketText.innerText = "1 Ticket"
+//     }
+//     else if (type === "duo") {
+//         ticketText.innerText = "Duo Quest (2 Tickets)"
+//     }
+//     else if (type === "trio") {
+//         ticketText.innerText = "Three Muskepaws (3 Tickets)"
+//     }
+// }
+
+// if (!type) {
+//     ticketText.innerText = "Unknown Ticket"
+// } else {
+//     if (type === "solo") {
+//         ticketText.innerText = "1 Ticket"
+//     }
+//     else if (type === "duo") {
+//         ticketText.innerText = "Duo Pawtners (2 Tickets)"
+//     }
+//     else if (type === "trio") {
+//         ticketText.innerText = "Three Pawventure (3 Tickets)"
+//     }
+//     else if (type === "five") {
+//         ticketText.innerText = "Meowdy Five (5 Tickets)"
+//     }
+//     else if (type === "seven") {
+//         ticketText.innerText = "Meowdy Seven (7 Tickets)"
+//     }
+// }
+
 if (!type) {
     ticketText.innerText = "Unknown Ticket"
 } else {
     if (type === "solo") {
         ticketText.innerText = "1 Ticket"
-    }
-    else if (type === "duo") {
-        ticketText.innerText = "Duo Pawtners (2 Tickets)"
-    }
-    else if (type === "trio") {
-        ticketText.innerText = "Three Pawventure (3 Tickets)"
-    }
-    else if (type === "five") {
-        ticketText.innerText = "Meowdy Five (5 Tickets)"
-    }
-    else if (type === "seven") {
-        ticketText.innerText = "Meowdy Seven (7 Tickets)"
     }
 }
 
@@ -123,7 +152,7 @@ form.addEventListener("submit", function (e) {
     const email = document.getElementById("email").value
     const phone = document.getElementById("phone").value
 
-    const bundle = bundleConfig2[type]
+    const bundle = bundleConfig3[type]
 
     if (!bundle) {
         alert("Invalid ticket type")

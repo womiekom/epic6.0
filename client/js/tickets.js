@@ -1,6 +1,6 @@
 const grid = document.querySelector(".ticket-grid")
 const button = document.querySelector("#ticket-btn")
-const detail = document.querySelector(".ticket-detail.presale2")
+const detail = document.querySelector(".ticket-detail.normal")
 const backBtn = detail.querySelector(".back-btn")
 
 button.addEventListener("click", () => {
