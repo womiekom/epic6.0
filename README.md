@@ -1,4 +1,4 @@
-    # EPIC 6.0 Registration System
+# EPIC 6.0 Registration System
 
 A full-stack event registration and QR verification system built for **EPIC 6.0**.
 
