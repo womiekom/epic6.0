@@ -14,7 +14,7 @@ const supabase = createClient(
 // GANTI SALAH SATU (ID atau EMAIL)
 const TARGET = {
     id: null, // contoh: "order-uuid"
-    email: "yusufabdurrahmanucuppss@gmail.com"
+    email: "aileenrizkyaisyah@gmail.com"
 }
 
 async function sendSingleOrder() {

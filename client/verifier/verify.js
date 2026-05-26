@@ -125,74 +125,51 @@ START QR
 const html5QrCode = new Html5Qrcode("reader")
 
 Html5Qrcode.getCameras()
+const cameraSelect =
+    document.getElementById("cameraSelect")
+
+const html5QrCode =
+    new Html5Qrcode("reader")
+
+let currentCameraId = null
+
+/* =========================
+LOAD CAMERAS
+========================= */
+
+Html5Qrcode.getCameras()
     .then(devices => {
 
-        if (devices && devices.length) {
+        if (!devices || devices.length === 0) {
 
-            const cameraId = devices[0].id
-
-            html5QrCode.start(
-                cameraId,
-                {
-                    fps: 10,
-                    qrbox: 250
-                },
-
-                async (decodedText) => {
-
-                    // prevent spam
-                    if (scanningLocked) return
-
-                    scanningLocked = true
-
-                    // PAUSE CAMERA
-                    await html5QrCode.pause()
-
-                    console.log("SCANNED:", decodedText)
-
-                    let ticketCode = decodedText
-
-                    /* =========================
-                    EXTRACT URL CODE
-                    ========================= */
-
-                    try {
-
-                        const url = new URL(decodedText)
-
-                        const code =
-                            url.searchParams.get("code")
-
-                        if (code) {
-                            ticketCode = code
-                        }
-
-                    } catch {
-                        // raw text
-                    }
-
-                    console.log("EXTRACTED:", ticketCode)
-
-                    await verifyTicket(ticketCode)
-
-                    // 3 SECOND FREEZE
-                    setTimeout(async () => {
-
-                        await html5QrCode.resume()
-
-                        setResult(
-                            "idle",
-                            "Ready To Scan"
-                        )
-
-                        scanningLocked = false
-
-                    }, 3000)
-                }
+            setResult(
+                "invalid",
+                "NO CAMERA FOUND"
             )
+
+            return
         }
 
+        // add options
+        devices.forEach(device => {
+
+            const option =
+                document.createElement("option")
+
+            option.value = device.id
+
+            option.text =
+                device.label || `Camera ${cameraSelect.length + 1}`
+
+            cameraSelect.appendChild(option)
+        })
+
+        // auto select first
+        currentCameraId = devices[0].id
+
+        startScanner(currentCameraId)
     })
+
     .catch(err => {
 
         console.error(err)
@@ -202,3 +179,88 @@ Html5Qrcode.getCameras()
             "CAMERA ERROR"
         )
     })
+
+/* =========================
+START SCANNER
+========================= */
+
+async function startScanner(cameraId) {
+
+    try {
+
+        currentCameraId = cameraId
+
+        await html5QrCode.start(
+            cameraId,
+            {
+                fps: 10,
+                qrbox: 250
+            },
+
+            async (decodedText) => {
+
+                if (scanningLocked) return
+
+                scanningLocked = true
+
+                await html5QrCode.pause()
+
+                console.log("SCANNED:", decodedText)
+
+                let ticketCode = decodedText
+
+                try {
+
+                    const url = new URL(decodedText)
+
+                    const code =
+                        url.searchParams.get("code")
+
+                    if (code) {
+                        ticketCode = code
+                    }
+
+                } catch { }
+
+                await verifyTicket(ticketCode)
+
+                setTimeout(async () => {
+
+                    await html5QrCode.resume()
+
+                    setResult(
+                        "idle",
+                        "Ready To Scan"
+                    )
+
+                    scanningLocked = false
+
+                }, 3000)
+            }
+        )
+
+    } catch (err) {
+
+        console.error(err)
+    }
+}
+
+/* =========================
+CHANGE CAMERA
+========================= */
+
+cameraSelect.addEventListener("change", async (e) => {
+
+    const newCameraId = e.target.value
+
+    try {
+
+        await html5QrCode.stop()
+
+        await startScanner(newCameraId)
+
+    } catch (err) {
+
+        console.error(err)
+    }
+})
