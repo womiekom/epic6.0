@@ -163,17 +163,25 @@ Epic-Registration/
 
 # 📷 Screenshot
 
-## Home Page
+## Main Page
 
 ![Home](client/assets/screenshots/Home.png)
+![Registration](client/assets/screenshots/Regis.png)
 
 ---
 
-## Ticket Purchase
+## Ticket Options
 
-![Purchase](screenshots/purchase.png)
+![](client/assets/screenshots/Ticket.png)
+![](client/assets/screenshots/Ticket2.png)
 
 ---
+
+## Purchase Tickets
+
+![Form](client/assets/screenshots/Purchase.png)
+![Proof](client/assets/screenshots/Purchase2.png)
+
 
 ## QR Verifier
 
@@ -183,13 +191,16 @@ Epic-Registration/
 
 ## Attendance System
 
-![Attendance](screenshots/attendance.png)
+![Attendance](client/assets/screenshots/Attendance.png)
+![OTP](client/assets/screenshots/OTP.png)
 
 ---
 
 ## Admin Dashboard
 
-![Admin](screenshots/admin.png)
+![Credentials](client/assets/screenshots/Admin.png)
+![Dashboard](client/assets/screenshots/Admin2.png)
+
 
 # ⚙️ System Flow
 
