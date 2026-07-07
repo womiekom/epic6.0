@@ -164,7 +164,7 @@ Epic-Registration/
 
 ## Home Page
 
-![Home](screenshots/Home.png)
+![Home](client/assets/screenshots/Home.png)
 
 ---
 
