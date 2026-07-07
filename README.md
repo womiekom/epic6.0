@@ -160,7 +160,35 @@ Epic-Registration/
 └── .gitignore
 ```
 
+# 📷 Screenshot
+
+## Home Page
+
+![Home](screenshots/Home.png)
+
 ---
+
+## Ticket Purchase
+
+![Purchase](screenshots/purchase.png)
+
+---
+
+## QR Verifier
+
+![Verifier](screenshots/verifier.png)
+
+---
+
+## Attendance System
+
+![Attendance](screenshots/attendance.png)
+
+---
+
+## Admin Dashboard
+
+![Admin](screenshots/admin.png)
 
 # ⚙️ System Flow
 
@@ -374,7 +402,3 @@ The system prioritizes:
 - Mobile usability
 
 ---
-
-# 👨‍💻 Author
-
-Built for EPIC 6.0 event operations.
