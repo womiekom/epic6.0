@@ -4,6 +4,7 @@ A full-stack event registration and QR verification system built for **EPIC 6.0*
 
 This project was designed to handle:
 
+- Google form registration through cards
 - Online ticket purchases
 - QR ticket generation
 - Email ticket delivery
