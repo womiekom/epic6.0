@@ -38,7 +38,6 @@ This project was designed to handle:
 - Used/unused ticket validation
 - Mobile-friendly verifier
 - Sound feedback support
-- Camera switching support
 
 ## 🧾 Attendance System
 
@@ -182,10 +181,26 @@ Epic-Registration/
 ![Form](client/assets/screenshots/Purchase.png)
 ![Proof](client/assets/screenshots/Purchase2.png)
 
+---
+
+## Admin Dashboard
+
+![Credentials](client/assets/screenshots/Admin.png)
+![Dashboard](client/assets/screenshots/Admin2.png)
+
+---
+
+## Gmail Inbox
+
+![Gmail](client/assets/screenshots/Gmail.png)
+![Ticket](client/assets/screenshots/PDF.png)
+
+---
 
 ## QR Verifier
 
-![Verifier](screenshots/verifier.png)
+![Camera](client/assets/screenshots/Verify.png)
+![Status](client/assets/screenshots/Verify2.png)
 
 ---
 
@@ -195,12 +210,6 @@ Epic-Registration/
 ![OTP](client/assets/screenshots/OTP.png)
 
 ---
-
-## Admin Dashboard
-
-![Credentials](client/assets/screenshots/Admin.png)
-![Dashboard](client/assets/screenshots/Admin2.png)
-
 
 # ⚙️ System Flow
 
